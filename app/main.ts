@@ -21,7 +21,7 @@ const apolloClient = new ApolloClient({
 // HEADERS WORK FINE IF TOKEN WAS IN MAIN
   headers: {
     // authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTg2MzU2NzM2LCJleHAiOjE1ODg5NDg3MzZ9.wpyhPTWuqxrDgezDXJqIOaAIaocpM8Ehd3BhQUWKK5Q`,
-    "x-hasura-admin-secret":"@ghmeec2020"
+   
   }
 
 })

@@ -1,6 +1,7 @@
 # NativeScript Tailwind Tests
 
-> A native application built with NativeScript-Vue
+> A native application built with NativeScript-Vue + Tailwind + Vue + Vuex + Apollo
+>> Practising repo for NativeScript-Vue
 
 ## Usage
 
