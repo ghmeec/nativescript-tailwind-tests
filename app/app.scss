@@ -1,0 +1,17 @@
+// Global SCSS styling
+// @see https://docs.nativescript.org/ui/styling
+@import "nativescript-tailwind/dist/tailwind";
+
+TabView{
+    tab-background-color:#2a4365;
+    tab-text-color:white;
+    selected-tab-text-color:white;
+    android-selected-tab-highlight-color:white;
+    tab-text-font-size:14px;
+    android-elevation:0;
+    flat:true;
+}
+
+TabViewItem{
+    text-transform:lowercase;
+}
