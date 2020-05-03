@@ -1,46 +1,73 @@
 <template>
   <Page class="bg-blue-100">
-    <ActionBar class="bg-blue-900 text-white" title="NativeScript + Tailwind" flat="true" />
-    <GridLayout columns="*" rows="*" class="px-8">
-      <StackLayout>
-        <StackLayout>
-          <Label
-            col="0"
-            row="0"
-            class="font-bold text-blue-800 text-base text-center my-3"
-            :text="count"
-          />
+    <ActionBar class="bg-blue-900 text-white text-lg" title="NativeScript Tailwind!" flat="true">
+      <StackLayout
+        orientation="horizontal"
+        class="w-full"
+        android:horizontalAlignment="left"
+        ios:horizontalAlignment="center"
+      >
+        <Label
+          text="NativeScript + Tailwind"
+          class="text-base font-bold text-white"
+          verticalAlignment="center"
+        />
+      </StackLayout>
+    </ActionBar>
+
+    <StackLayout orientation="vertical" class="px-2">
+      <StackLayout orientation="vertical" class="py-2">
+        <Label
+          col="0"
+          row="0"
+          class="font-bold text-blue-800 text-base text-center my-3"
+          :text="count"
+        />
+
+        <GridLayout rows="auto" columns="*,*" class="py-4">
           <Button
-            col="0"
-            row="1"
-            class="bg-blue-200 text-blue-900 mx-8 mt-4 py-2 rounded"
+            row="0"
+            col="1"
+            class="bg-blue-200 text-blue-900 font-bold mx-8 py-1 my-4 rounded-sm text-md h-10"
             text=" + "
             @tap="increase()"
           />
 
           <Button
+            row="0"
             col="0"
-            row="1"
-            class="bg-blue-200 text-blue-900 mx-8 mt-4 py-2 rounded"
+            class="bg-blue-200 text-blue-900 font-bold mx-8 py-1 my-4 rounded-sm text-md h-10"
             text=" - "
             @tap="decrease()"
           />
-        </StackLayout>
-        <StackLayout class="my-8">
-           <ActivityIndicator busy="true" v-if="$apollo.queries.todos.error" class="text-red-900"
-          width="50" height="50"
-          />
-          <ActivityIndicator busy="true" v-if="$apollo.queries.todos.loading" class="text-blue-900"
-          width="50" height="50"
-          />
-          <ListView for="todo in todos" row="0" col="0" class="m-20">
-            <v-template class="py-4">
-              <Label :text="todo.title" :key="todo.id" class="py-4" />
-            </v-template>
-          </ListView>
-        </StackLayout>
+        </GridLayout>
       </StackLayout>
-    </GridLayout>
+      <GridLayout class="my-8">
+        <ActivityIndicator
+          busy="true"
+          v-if="$apollo.queries.todos.loading"
+          class="text-blue-900"
+          width="50"
+          height="50"
+        />
+        <!-- <Label
+          v-if="error"
+          class="font-bold text-red-800 text-base text-center my-3"
+          textWrap="true"
+          :text="error"
+        />
+         -->
+        
+        <ListView v-if="loaded&&todos2" for="todo in todos2" row="0" col="0" class="m-20 bg-white" 
+          @itemTap="onItemTap"
+          @onScroll="scrollData"
+         >
+          <v-template class="py-4">
+            <Label :text="todo.title" :key="todo.id" class="py-4 pl-2" />
+          </v-template>
+        </ListView>
+      </GridLayout>
+    </StackLayout>
   </Page>
 </template>
 
@@ -50,8 +77,30 @@ import gql from "graphql-tag";
 export default {
   data() {
     return {
-      todos: []
+      todos: null,
+      error: null,
+      loaded:false,
+      todos2: [
+        { id: 1, title: "Test 1" },
+        { id: 2, title: "Test 1" },
+        { id: 3, title: "Test 1" },
+        { id: 4, title: "Test 1" },
+        { id: 5, title: "Test 1" },
+        { id: 6, title: "Test 1" },
+        { id: 7, title: "Test 1" },
+        { id: 8, title: "Test 1" },
+        { id: 9, title: "Test 1" },
+        { id: 10, title: "Test 1" },
+
+        ]
     };
+  },
+  mounted() {
+    this.loaded=true
+    console.timeEnd("TransitionTime");
+  },
+  created() {
+    console.timeEnd("TransitionTime");
   },
   apollo: {
     todos: {
@@ -63,6 +112,10 @@ export default {
           }
         }
       `,
+      error(error) {
+        this.error = JSON.stringify(error.message);
+      }
+
       // pollInterval:500
       // update(data) {
       //   // This function returns our QUERY into the data property "items" when the component is loaded.
@@ -70,7 +123,7 @@ export default {
       //   //    return data.myschema_mytable;
       // }
       //   pollInterval:1000
-    },
+    }
     // subscribeToMore: {
     //   // below is the subscription query.
     //   todos: gql`
@@ -87,10 +140,16 @@ export default {
     //   }
     // }
   },
-  created(){
-    console.dir(this.$apollo.queries,{depth:null})
-  },
+  created() {},
   methods: {
+    onItemTap(data){
+      // console.log("Tapped data : ",data)
+      alert("Clicked : "+JSON.stringify(data.item))
+    }
+    ,
+    scrollData($evt) {
+      console.log("Data : ", $$evt);
+    },
     increase() {
       this.$store.commit("increase");
     },

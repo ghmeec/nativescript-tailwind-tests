@@ -4,15 +4,22 @@
   "description": "A native application built with NativeScript-Vue",
   "author": "ghmeec <georgemillanzi1234@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "bun": "tns run android --bundle --env.uglify --env.aot --env.snapshot"
+  },
   "nativescript": {
     "id": "com.ghmeec.tnstwailwind",
     "templateVersion": "v2",
     "tns-android": {
-      "version": "6.5.0"
+      "version": "6.5.0",
+      "markingMode": "none"
     },
     "tns-ios": {
       "version": "6.5.0"
     }
+  },
+  "android": {
+    "markingMode": "none"
   },
   "dependencies": {
     "apollo-boost": "^0.4.7",
