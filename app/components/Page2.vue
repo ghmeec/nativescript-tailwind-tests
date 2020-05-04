@@ -16,7 +16,7 @@
     </ActionBar>
 
     <StackLayout orientation="vertical" class="px-2">
-      <StackLayout orientation="vertical" class="py-2">
+      <StackLayout v-if="loaded" orientation="vertical" class="py-2">
         <Label
           col="0"
           row="0"
@@ -42,7 +42,7 @@
           />
         </GridLayout>
       </StackLayout>
-      <GridLayout class="my-8">
+      <GridLayout v-if="loaded" class="my-8">
         <ActivityIndicator
           busy="true"
           v-if="$apollo.queries.todos.loading"
